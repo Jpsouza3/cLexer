@@ -1,6 +1,6 @@
 # Lexical Cursor Project
 
-Built a tiny lexical analysis project as a motor to learn pointers in C.
+Built a tiny lexical analysis project as a vehicle to learn pointers in C.
 
 ### Features
 
