@@ -11,7 +11,6 @@ Basically, `lexer.c` these methods:
 * `lexer_next_token`
 * `get_tokens`
 
-
 `print_token` receives a Token and prints its contents.
 
 `lexer_init` initializes the Lexer struct with the input stream to be analyzed.
