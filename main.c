@@ -2,7 +2,18 @@
 #include "lexer.h"
 
 int main(void){
-    char *s = "lorem ipsum";
-    lexer_cursor(s);
+
+    Lexer l;
+    TokenList tl;
+    const char *s = "lorem ipsum teste um dois";
+
+    lexer_init(&l, s);
+
+    get_tokens(&l, &tl);
+
+    for(int i = 0; i < tl.count; i++){
+        print_token(&tl.tokens[i]);
+    }
+
     return 0;
 }
