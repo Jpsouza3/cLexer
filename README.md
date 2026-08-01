@@ -1,14 +1,21 @@
 # Lexical Cursor Project
 
-Built a tiny lexical analysis project as a motor to learn pointers in C.
+Built a tiny lexical analysis project as a vehicle to learn pointers in C.
 
 ### Features
 
-Basically, `lexer.c` has two methods:
+Basically, `lexer.c` these methods:
 
-* `lexer_cursor`
 * `print_token`
+* `lexer_init`
+* `lexer_next_token`
+* `get_tokens`
 
-`lexer_cursor` receives a `char *`, which represents an input stream. It walks through the string using a cursor and separates it into tokens. When it finds a terminator (currently a space `' '`), it stores the token boundaries and calls `print_token`.
 
-`print_token` receives a `char *` along with the token's start and end indexes, then prints the token.
+`print_token` receives a Token and prints its contents.
+
+`lexer_init` initializes the Lexer struct with the input stream to be analyzed.
+
+`lexer_next_token` walks through the input stream using two pointers and returns the next token.
+
+`get_tokens` repeatedly calls `lexer_next_token` and stores the resulting tokens in a TokenList.

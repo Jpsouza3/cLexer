@@ -1,36 +1,74 @@
 #include <stdio.h>
 #include "lexer.h"
 
-void print_token(char *s, int initial_index, int last_index){
-    int current_index = 0;
-
-    printf("token: ");
-
-    while(current_index < last_index){
-        if(current_index >= initial_index){
-            printf("%c", *s);
-        }
-        s++;
-        current_index++;
-    }
-
-    printf("\n");
+void lexer_init(Lexer *lexer, const char *source) {
+    lexer->start = source;
+    lexer->current = source;
 }
 
-void lexer_cursor(char *original){
+Token lexer_next_token(Lexer *lexer) {
+    // TO DO: implementar classificador de tokens
 
-    char *cursor = original;
-    int index = 0;
-    int last_token_index = 0;
-
-    while(*cursor != '\0'){
-
-        if(*cursor == ' '){
-            print_token(original, last_token_index, index);
-            last_token_index = index + 1;
-        }
-        cursor++;
-        index++;
+    if (*lexer->start == '\0') {
+        return (Token){
+            .type = TOKEN_EOF,
+            .start = lexer->start,
+            .length = 0
+        };
     }
-    print_token(original, last_token_index, index);
+
+    while (1) {
+        if (*lexer->current == ' ') {
+
+            Token t = {
+                .type = TOKEN_IDENTIFIER,
+                .start = lexer->start,
+                .length = (int)(lexer->current - lexer->start)
+            };
+
+            lexer->current++;
+            lexer->start = lexer->current;
+
+            return t;
+        }
+
+        if(*lexer->current == '\0'){
+
+            Token t = {
+                .type = TOKEN_IDENTIFIER,
+                .start = lexer->start,
+                .length = (int)(lexer->current - lexer->start)
+            };
+            lexer->start = lexer->current;
+
+            return t;
+        }
+        lexer->current++;
+    }
+}
+
+void print_token(const Token *t)
+{
+    const char *p = t->start;
+
+    for (int i = 0; i < t->length; i++, p++) {
+        putchar(*p);
+    }
+
+    putchar('\n');
+}
+
+void get_tokens(Lexer *lexer, TokenList *tokenList) {
+    tokenList->count = 0;
+
+    for (int i = 0; i < 10; i++) {
+        Token t = lexer_next_token(lexer);
+
+        if (t.type == TOKEN_EOF) {
+            break;
+        }
+
+        tokenList->tokens[i] = t;
+        tokenList->count++;
+    }
 }
